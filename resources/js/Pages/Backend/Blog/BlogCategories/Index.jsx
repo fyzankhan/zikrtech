@@ -1,0 +1,171 @@
+import React from "react";
+import { router as Inertia } from "@inertiajs/react";
+import {
+  useTable,
+  useSortBy,
+  usePagination,
+  useGlobalFilter,
+} from "react-table";
+import AdminLayout from "@/Layouts/AdminLayout";
+import { usePage } from "@inertiajs/react";
+import FlashMessage from "@/components/FlashMessage";
+
+function BlogCategories({ categories }) {
+  const data = React.useMemo(() => categories, [categories]);
+  const { flash } = usePage().props;
+  console.log(usePage().props);
+  console.log("Flash data:", flash);
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Slug",
+        accessor: "slug",
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ value }) => (value ? "Active" : "Inactive"),
+      },
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <div>
+            <button
+              onClick={() =>
+                Inertia.get(`/admin/blog-categories/${row.original.id}/edit`)
+              }
+              className="btn btn-sm btn-primary"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => handleDelete(row.original.id)}
+              className="btn btn-sm btn-danger ml-2"
+            >
+              Delete
+            </button>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state,
+    setGlobalFilter,
+  } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
+
+  const { pageIndex } = state;
+
+  function handleDelete(id) {
+    if (confirm("Are you sure you want to delete this category?")) {
+      Inertia.delete(`/admin/blog-categories/${id}`);
+    }
+  }
+
+  return (
+    <AdminLayout>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800">
+          Blog Categories
+        </h1>
+        {/*  Message */}
+        <FlashMessage message={flash.success} type="success" />
+        <FlashMessage message={flash.error} type="error" />
+
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
+            onChange={(e) => setGlobalFilter(e.target.value || undefined)}
+          />
+        </div>
+
+        <div className="overflow-x-auto">
+          <table {...getTableProps()} className="min-w-full bg-white">
+            <thead className="bg-gray-100">
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()} className="border-b">
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+                    >
+                      {column.render("Header")}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? " 🔽"
+                            : " 🔼"
+                          : ""}
+                      </span>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody
+              {...getTableBodyProps()}
+              className="bg-white divide-y divide-gray-200"
+            >
+              {page.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} className="hover:bg-gray-50">
+                    {row.cells.map((cell) => (
+                      <td
+                        {...cell.getCellProps()}
+                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-700"
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="mt-6 flex items-center justify-between">
+          <button
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          <span className="text-sm text-gray-600">
+            Page {pageIndex + 1} of {pageOptions.length}
+          </span>
+          <button
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </AdminLayout>
+  );
+}
+
+export default BlogCategories;

@@ -1,0 +1,104 @@
+import React, { useState } from "react";
+import { router as Inertia, useForm } from "@inertiajs/react";
+import AdminLayout from "@/Layouts/AdminLayout";
+
+function EditBlogCategory({ category }) {
+  const { data, setData, put, errors } = useForm({
+    name: category.name || "",
+    slug: category.slug || "",
+    status: category.status || false,
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    put(`/admin/blog-categories/${category.id}`, {
+      onSuccess: () => {
+        Inertia.get("/admin/blog-categories");
+      },
+    });
+  }
+
+  return (
+    <AdminLayout>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800">
+          Edit Blog Category
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              value={data.name}
+              onChange={(e) => setData("name", e.target.value)}
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+            {errors.name && (
+              <div className="text-red-500 text-sm mt-2">{errors.name}</div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="slug"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Slug
+            </label>
+            <input
+              type="text"
+              name="slug"
+              id="slug"
+              value={data.slug}
+              onChange={(e) => setData("slug", e.target.value)}
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+            {errors.slug && (
+              <div className="text-red-500 text-sm mt-2">{errors.slug}</div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="status"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Status
+            </label>
+            <select
+              name="status"
+              id="status"
+              value={data.status}
+              onChange={(e) => setData("status", e.target.value === "true")}
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
+            >
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+            {errors.status && (
+              <div className="text-red-500 text-sm mt-2">{errors.status}</div>
+            )}
+          </div>
+
+          <div className="mt-6">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </AdminLayout>
+  );
+}
+
+export default EditBlogCategory;
