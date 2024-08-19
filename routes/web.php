@@ -1,16 +1,17 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Frontend\ApiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // Route::redirect('/', '/dashboard');
-Route::get('/', [PageController::class, 'landing'])
+Route::get('/', [MainController::class, 'landing'])
     ->name('landing-page');
 
 
@@ -29,5 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
+//api
+
+
+Route::get('/api/brands', [ApiController::class, 'brands'])
+    ->name('api-brands');
 
 require __DIR__ . '/auth.php';

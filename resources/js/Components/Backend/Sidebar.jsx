@@ -44,17 +44,38 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
           </NavLink>
           <NavLink
             href={route("user.index")}
-            active={route().current("user.index")}
+            active={route().current("admin.user.index")}
             className="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
           >
             Users
           </NavLink>
           <NavLink
             href={route("admin.blog-categories.index")}
-            active={route().current("user.index")}
+            active={route().current("admin.blog-categories.index")}
             className="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
           >
             Blog categories
+          </NavLink>
+          <NavLink
+            href={route("admin.categories.index")}
+            active={route().current("admin.categories.index")}
+            className="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+          >
+            Categories
+          </NavLink>
+          <NavLink
+            href={route("admin.brands.index")}
+            active={route().current("admin.brands.index")}
+            className="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+          >
+            Brands
+          </NavLink>
+          <NavLink
+            href={route("admin.sliders.index")}
+            active={route().current("admin.sliders.index")}
+            className="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
+          >
+            Banners
           </NavLink>
           {/* Add more navigation links as needed */}
         </nav>

@@ -11,16 +11,14 @@ use App\Http\Controllers\Backend\BlogCategoryController;
 
 // use App\Http\Controllers\Backend\BlogCommentController;
 // use App\Http\Controllers\Backend\BlogController;
-// use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 
-// use App\Http\Controllers\Backend\ChildCategoryController;
 // use App\Http\Controllers\Backend\CodSettingController;
 // use App\Http\Controllers\Backend\CouponController;
 // use App\Http\Controllers\Backend\CustomerListController;
 // use App\Http\Controllers\Backend\FlashSaleController;
-// use App\Http\Controllers\Backend\FooterGridThreeController;
-// use App\Http\Controllers\Backend\FooterGridTwoController;
+
 // use App\Http\Controllers\Backend\FooterInfoController;
 // use App\Http\Controllers\Backend\FooterSocialController;
 // use App\Http\Controllers\Backend\HomePageSettingController;
@@ -63,7 +61,7 @@ use App\Http\Controllers\Backend\SliderController;
 // Route::post('profile/update/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 
 // /** Slider Route */
-Route::resource('slider', SliderController::class);
+Route::resource('sliders', SliderController::class);
 // /** Category Route */
 Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
 Route::resource('categories', CategoryController::class);
@@ -71,16 +69,15 @@ Route::resource('categories', CategoryController::class);
 // Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.change-status');
 // Route::resource('sub-category', SubCategoryController::class);
 // /** Child Category Route */
-// Route::put('child-category/change-status', [ChildCategoryController::class, 'changeStatus'])->name('child-category.change-status');
+
 // Route::get('get-subcategories', [ChildCategoryController::class, 'getSubCategories'])->name('get-subcategories');
-// Route::resource('child-category', ChildCategoryController::class);
+
 
 // /** Brand routes */
-// Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
-// Route::resource('brand', BrandController::class);
+Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
+Route::resource('brands', BrandController::class);
 
-// /** Vendor Profile routes */
-// Route::resource('vendor-profile', AdminVendorProfileController::class);
+
 
 // /** Products routes */
 // Route::get('product/get-subcategories', [ProductController::class, 'getSubCategories'])->name('product.get-subcategories');
@@ -174,8 +171,6 @@ Route::resource('blog-categories', BlogCategoryController::class);
 
 // Route::put('blog/status-change', [BlogController::class, 'changeStatus'])->name('blog.status-change');
 // Route::resource('blog', BlogController::class);
-// Route::get('blog-comments', [BlogCommentController::class, 'index'])->name('blog-comments.index');
-// Route::delete('blog-comments/{id}/destory', [BlogCommentController::class, 'destory'])->name('blog-comments.destory');
 
 
 // /** Subscribers route */

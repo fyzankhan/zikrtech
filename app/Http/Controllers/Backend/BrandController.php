@@ -10,16 +10,29 @@ use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Cell\IValueBinder;
 use Str;
+use App\Http\Requests\BrandStoreRequest;
+use App\Http\Requests\BrandUpdateRequest;
+use App\Repositories\Backend\Brand\BrandInterface;
+use Inertia\Inertia;
 
 class BrandController extends Controller
 {
     use ImageUploadTrait;
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(BrandDataTable $dataTable)
+
+    protected $brandRepository;
+    private $directory = 'Backend/Brand/';
+
+    public function __construct(BrandInterface $brandRepository)
     {
-        return $dataTable->render('admin.brand.index');
+        $this->brandRepository = $brandRepository;
+    }
+
+    public function index()
+    {
+        $brands = $this->brandRepository->paginate(10);
+        return Inertia::render($this->directory . 'Index', [
+            'brands' => $brands
+        ]);
     }
 
     /**
@@ -69,8 +82,11 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        $brand = Brand::findOrFail($id);
-        return view('admin.brand.edit', compact('brand'));
+
+        $brand = $this->brandRepository->findById($id);
+        return Inertia::render($this->directory . 'Edit', [
+            'brand' => $brand
+        ]);
     }
 
     /**
@@ -87,7 +103,7 @@ class BrandController extends Controller
 
         $brand = Brand::findOrFail($id);
 
-        $logoPath = $this->updateImage($request, 'logo', 'uploads', $brand->logo);
+        $logoPath = $this->updateBrandImage($request, 'logo', 'uploads/brands', $brand->logo);
 
         $brand->logo = empty(!$logoPath) ? $logoPath : $brand->logo;
         $brand->name = $request->name;
@@ -96,8 +112,8 @@ class BrandController extends Controller
         $brand->status = $request->status;
         $brand->save();
 
-        toastr('Updated Successfully!', 'success');
-        return redirect()->route('admin.brand.index');
+        return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully!')->setStatusCode(303);
+
     }
 
     /**
@@ -106,7 +122,7 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         $brand = Brand::findOrFail($id);
-        if(Product::where('brand_id', $brand->id)->count() > 0){
+        if (Product::where('brand_id', $brand->id)->count() > 0) {
             return response(['status' => 'error', 'message' => 'This brand have products you can\'t delete it.']);
         }
         $this->deleteImage($brand->logo);
@@ -117,9 +133,9 @@ class BrandController extends Controller
 
     public function changeStatus(Request $request)
     {
-        $category = Brand::findOrFail($request->id);
-        $category->status = $request->status == 'true' ? 1 : 0;
-        $category->save();
+        $brand = Brand::findOrFail($request->id);
+        $brand->status = $request->status == 'true' ? 1 : 0;
+        $brand->save();
 
         return response(['message' => 'Status has been updated!']);
     }

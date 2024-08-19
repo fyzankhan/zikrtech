@@ -6,16 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
-
+use Inertia\Inertia;
 class SliderController extends Controller
 {
     use ImageUploadTrait;
+    private $directory = 'Backend/Sliders/';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
+        $sliders = Slider::all();
+        return Inertia::render($this->directory . 'Index', [
+            'sliders' => $sliders
+        ]);
     }
 
     /**
@@ -23,7 +27,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view('admin.slider.create');
+        //return view('admin.slider.create');
     }
 
     /**
@@ -69,14 +73,19 @@ class SliderController extends Controller
     public function edit(string $id)
     {
         $slider = Slider::findOrFail($id);
-        return view('admin.slider.edit', compact('slider'));
+        return Inertia::render($this->directory . 'Edit', [
+            'slider' => $slider
+        ]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+
         $request->validate([
             'banner' => ['nullable', 'image', 'max:2000'],
             'type' => ['string', 'max:200'],
@@ -96,8 +105,9 @@ class SliderController extends Controller
         $slider->btn_url = $request->btn_url;
         $slider->status = $request->status;
         $slider->save();
+        return redirect()->route('admin.sliders.index')->with('success', 'slider updated Successfully!');
 
-        return redirect()->route('admin.slider.index');
+
     }
 
     /**

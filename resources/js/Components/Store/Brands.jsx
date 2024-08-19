@@ -1,0 +1,55 @@
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
+const fetchBrands = async () => {
+  const response = await axios.get("/api/brands");
+  return response.data.brands;
+};
+
+const Brands = () => {
+  const {
+    data: brands,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["brands"],
+    queryFn: fetchBrands,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading brands</div>;
+  }
+
+  return (
+    <>
+      <div className="w-full brand-section-wrapper mb-[60px] aos-init">
+        <div className="container-x mx-auto">
+          <div className="section-title flex justify-between items-center mb-5">
+            <h1 className="sm:text-3xl text-xl font-600 text-qblacktext">
+              Shop by Brand
+            </h1>
+          </div>
+          <div className="grid lg:grid-cols-6 sm:grid-cols-4 grid-cols-2 gap-4">
+            {brands.map((brand) => (
+              <div key={brand.id} className="item">
+                <div className="w-full h-[130px] bg-white border border-primarygray flex justify-center items-center">
+                  <img src={brand.logo} alt={brand.name} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Brands;

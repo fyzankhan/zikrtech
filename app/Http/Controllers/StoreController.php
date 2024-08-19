@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Slider;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -12,9 +13,11 @@ class StoreController extends Controller
      */
     public function index()
     {
-        return inertia::render('Store/StoreMain', [
-
+        $sliders = Slider::where('status', 1)->get();
+        return Inertia::render('Store/StoreMain', [
+            'sliders' => $sliders
         ]);
+
     }
 
 

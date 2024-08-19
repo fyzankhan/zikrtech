@@ -1286,88 +1286,12 @@ const Header = () => {
                   </div>
                   <div className="nav">
                     <ul className="nav-wrapper flex xl:space-x-10 space-x-5">
-                      <li className="relative">
-                        <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                          <span>Homepage</span>
-                          <span className="ml-1.5 ">
-                            <svg
-                              width={10}
-                              height={5}
-                              viewBox="0 0 10 5"
-                              fill="none"
-                              className="fill-current"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <rect
-                                x="9.18359"
-                                y="0.90918"
-                                width="5.78538"
-                                height="1.28564"
-                                transform="rotate(135 9.18359 0.90918)"
-                              />
-                              <rect
-                                x="5.08984"
-                                y={5}
-                                width="5.78538"
-                                height="1.28564"
-                                transform="rotate(-135 5.08984 5)"
-                              />
-                            </svg>
+                      <li>
+                        <a href="/store">
+                          <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
+                            <span>Home</span>
                           </span>
-                        </span>
-                        <div className="sub-menu w-[220px] absolute left-0 top-[60px]">
-                          <div
-                            className="w-full bg-white flex justify-between items-center "
-                            style={{
-                              boxShadow:
-                                "rgba(0, 0, 0, 0.14) 0px 15px 50px 0px",
-                            }}
-                          >
-                            <div className="categories-wrapper w-full h-full p-5">
-                              <div>
-                                <div className="category-items">
-                                  <ul className="flex flex-col space-y-2">
-                                    <li>
-                                      <a href="/">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Home One
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/home-two">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Home Two
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/home-three">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Home Three
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/home-four">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Home Four
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/home-five">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Home Five
-                                        </span>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        </a>
                       </li>
                       <li>
                         <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">

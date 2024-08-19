@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
-use App\Repositories\Category\CategoryInterface;
+use App\Repositories\Backend\Category\CategoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
