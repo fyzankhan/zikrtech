@@ -18,13 +18,26 @@ class CategoryController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function index()
+
+
+    public function index(Request $request)
     {
-        $categories = $this->categoryRepository->paginate(10);
+        $query = $this->categoryRepository->query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('slug', 'LIKE', "%{$search}%");
+        }
+
+        $categories = $query->paginate(10);
+
         return Inertia::render($this->directory . 'Index', [
-            'categories' => $categories
+            'categories' => $categories,
+            'search' => $request->get('search')
         ]);
     }
+
 
     public function create()
     {

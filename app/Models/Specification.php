@@ -9,9 +9,6 @@ class Specification extends Model
 {
     use HasFactory;
 
-    public function productVariantItems()
-    {
-        return $this->hasMany(ProductVariantItem::class);
-    }
+
 
 }

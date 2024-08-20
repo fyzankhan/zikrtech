@@ -3,28 +3,45 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Order;
-use App\Models\OrderProduct;
-use App\Models\Product;
-use App\Models\ProductImageGallery;
-use App\Models\ProductVariant;
-use App\Models\SubCategory;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
+use App\Repositories\Backend\Product\ProductInterface;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 use Str;
 
 class ProductController extends Controller
 {
     use ImageUploadTrait;
+
+    protected $productRepository;
+    private $directory = 'Backend/Product/';
+
+    public function __construct(ProductInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Product::limit(10)->get();
+        $query = $this->productRepository->query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('slug', 'LIKE', "%{$search}%");
+        }
+
+        $products = $query->paginate(10);
+
+        return Inertia::render($this->directory . 'Index', [
+            'products' => $products,
+            'search' => $request->get('search')
+        ]);
     }
 
     /**
@@ -32,63 +49,31 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $brands = Brand::all();
-        return view('admin.product.create', compact('categories', 'brands'));
+        $categories = $this->productRepository->getCategories();
+        $brands = $this->productRepository->getBrands();
+
+        return Inertia::render(
+            $this->directory . 'Create',
+            [
+                'categories' => $categories
+                ,
+                'brands' => $brands
+            ]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        $request->validate([
-            'image' => ['required', 'image', 'max:3000'],
-            'name' => ['required', 'max:200'],
-            'category' => ['required'],
-            'brand' => ['required'],
-            'price' => ['required'],
-            // 'qty' => ['required'],
-            'short_description' => ['required', 'max: 600'],
-            'long_description' => ['required'],
-            'seo_title' => ['nullable', 'max:200'],
-            'seo_description' => ['nullable', 'max:250'],
-            'status' => ['required']
-        ]);
+        $data = $request->validated();
+        $data['thumb_image'] = $this->uploadImage($request, 'image', 'uploads/products');
+        $data['slug'] = Str::slug($data['name']);
 
-        /** Handle the image upload */
-        $imagePath = $this->uploadImage($request, 'image', 'uploads');
+        $this->productRepository->create($data);
 
-        $product = new Product();
-        $product->thumb_image = $imagePath;
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->category_id = $request->category;
-        $product->sub_category_id = $request->sub_category;
-        $product->brand_id = $request->brand;
-        //$product->qty = $request->qty;
-        $product->qty = 0;
-        $product->short_description = $request->short_description;
-        $product->long_description = $request->long_description;
-        $product->sku = $request->sku;
-        $product->price = $request->price;
-        $product->offer_price = $request->offer_price;
-        $product->offer_start_date = $request->offer_start_date;
-        $product->offer_end_date = $request->offer_end_date;
-        $product->status = $request->status;
-        $product->is_approved = 1;
-        $product->seo_title = $request->seo_title;
-        $product->seo_description = $request->seo_description;
-        $product->save();
-
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -96,60 +81,31 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
-        $subCategories = SubCategory::where('category_id', $product->category_id)->get();
-        $categories = Category::all();
-        $brands = Brand::all();
-        return view('admin.product.edit', compact('product', 'categories', 'brands', 'subCategories', 'childCategories'));
+        $product = $this->productRepository->findById($id);
+        $subCategories = $this->productRepository->getSubCategories($product->category_id);
+        $categories = $this->productRepository->getCategories();
+        $brands = $this->productRepository->getBrands();
+
+        return Inertia::render('Backend/Product/Edit', compact('product', 'categories', 'brands', 'subCategories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductUpdateRequest $request, string $id)
     {
-        $request->validate([
-            'image' => ['nullable', 'image', 'max:3000'],
-            'name' => ['required', 'max:200'],
-            'category' => ['required'],
-            'brand' => ['required'],
-            'price' => ['required'],
-            // 'qty' => ['required'],
-            'short_description' => ['required', 'max: 600'],
-            'long_description' => ['required'],
-            'seo_title' => ['nullable', 'max:200'],
-            'seo_description' => ['nullable', 'max:250'],
-            'status' => ['required']
-        ]);
+        $data = $request->validated();
+        $product = $this->productRepository->findById($id);
 
-        $product = Product::findOrFail($id);
+        if ($request->hasFile('image')) {
+            $data['thumb_image'] = $this->updateImage($request, 'image', 'uploads/products', $product->thumb_image);
+        }
 
-        /** Handle the image upload */
-        $imagePath = $this->updateImage($request, 'image', 'uploads', $product->thumb_image);
+        $data['slug'] = Str::slug($data['name']);
 
-        $product->thumb_image = empty(!$imagePath) ? $imagePath : $product->thumb_image;
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->category_id = $request->category;
-        $product->sub_category_id = $request->sub_category;
-        $product->brand_id = $request->brand;
-        // $product->qty = $request->qty;
-        $product->short_description = $request->short_description;
-        $product->long_description = $request->long_description;
-        $product->video_link = $request->video_link;
-        $product->sku = $request->sku;
-        $product->price = $request->price;
-        $product->offer_price = $request->offer_price;
-        $product->offer_start_date = $request->offer_start_date;
-        $product->offer_end_date = $request->offer_end_date;
-        $product->status = $request->status;
-        $product->seo_title = $request->seo_title;
-        $product->seo_description = $request->seo_description;
-        $product->save();
+        $this->productRepository->update($data, $id);
 
-
-        return redirect()->route('admin.products.index');
-
+        return redirect()->route('admin.product.index')->with('success', 'Product updated successfully!');
     }
 
     /**
@@ -157,53 +113,23 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
-        if (OrderProduct::where('product_id', $product->id)->count() > 0) {
-            return response(['status' => 'error', 'message' => 'This product have orders can\'t delete it.']);
-        }
 
-        /** Delte the main product image */
-        $this->deleteImage($product->thumb_image);
-
-        /** Delete product gallery images */
-        $galleryImages = ProductImageGallery::where('product_id', $product->id)->get();
-        foreach ($galleryImages as $image) {
-            $this->deleteImage($image->image);
-            $image->delete();
-        }
-
-        /** Delete product variants if exist */
-        $variants = ProductVariant::where('product_id', $product->id)->get();
-
-        foreach ($variants as $variant) {
-            $variant->productVariantItems()->delete();
-            $variant->delete();
-        }
-
-        $product->delete();
-
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 
     public function changeStatus(Request $request)
     {
-        $product = Product::findOrFail($request->id);
-        $product->status = $request->status == 'true' ? 1 : 0;
-        $product->save();
+        $this->productRepository->changeStatus($request->id, $request->status == 'true');
 
-        return response(['message' => 'Status has been updated!']);
+        return response()->json(['message' => 'Product status has been updated!']);
     }
 
     /**
-     * Get all product sub categores
+     * Get all product subcategories.
      */
-
     public function getSubCategories(Request $request)
     {
-        $subCategories = SubCategory::where('category_id', $request->id)->get();
+        $subCategories = $this->productRepository->getSubCategories($request->id);
 
-        return $subCategories;
+        return response()->json($subCategories);
     }
-
-
 }

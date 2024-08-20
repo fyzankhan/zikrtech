@@ -10,47 +10,91 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import FlashMessage from "@/components/FlashMessage";
 import EditIcon from "@/Components/Icon/EditIcon";
 
-const Categories = ({ categories }) => {
+const Products = ({ products }) => {
   const {
-    data: categoryData,
+    data: productData,
     current_page,
     last_page,
     next_page_url,
     prev_page_url,
-  } = categories;
+  } = products;
   const { flash } = usePage().props;
 
-  const data = useMemo(() => categoryData, [categoryData]);
+  const data = useMemo(() => productData, [productData]);
+
+  const toggleStatus = async (id, newStatus) => {
+    try {
+      const formData = new FormData();
+      formData.append("id", id);
+      formData.append("status", newStatus);
+
+      // Send the PUT request using Axios
+      const response = await axios.post(
+        `/admin/product/change-status`,
+        formData,
+        {
+          headers: {
+            "X-HTTP-Method-Override": "PUT",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+              .content,
+          },
+        }
+      );
+
+      console.log("Status updated:", response.data);
+    } catch (error) {
+      console.error("Failed to toggle status", error);
+    }
+  };
 
   const columns = useMemo(
     () => [
       {
         Header: "Name",
         accessor: "name",
+        Cell: ({ value }) => {
+          const maxLength = 30;
+          const displayValue =
+            value.length > maxLength
+              ? `${value.substring(0, maxLength)}...`
+              : value;
+
+          return <span title={value}>{displayValue}</span>;
+        },
       },
       {
         Header: "Slug",
         accessor: "slug",
+        Cell: ({ value }) => {
+          const maxLength = 20;
+          return value.length > maxLength
+            ? `${value.substring(0, maxLength)}...`
+            : value;
+        },
       },
       {
         Header: " ",
         accessor: "status",
-        Cell: ({ value }) => (
-          <span
-            className={`text-xs font-semibold inline-block py-1 px-2 rounded-full ${
-              value ? "text-green-600 bg-green-200" : "text-red-600 bg-red-200"
-            }`}
-          >
-            {value ? "Active" : "Inactive"}
-          </span>
-        ),
+        Cell: ({ value, row }) => {
+          const handleToggle = () => {
+            const newStatus = !value;
+            toggleStatus(row.original.id, newStatus);
+          };
+
+          return (
+            <label className="switch-btn">
+              <input type="checkbox" checked={value} onChange={handleToggle} />
+              <span className="slider-btn round-slider-btn"></span>
+            </label>
+          );
+        },
       },
       {
         Header: " ",
         Cell: ({ row }) => (
           <button
             onClick={() =>
-              Inertia.get(`/admin/categories/${row.original.id}/edit`)
+              Inertia.get(`/admin/products/${row.original.id}/edit`)
             }
             className="btn btn-sm btn-primary"
           >
@@ -79,7 +123,7 @@ const Categories = ({ categories }) => {
   const handleSearch = (e) => {
     const searchQuery = e.target.value || "";
     Inertia.get(
-      "/admin/categories",
+      "/admin/products",
       { search: searchQuery },
       { preserveState: true }
     );
@@ -94,9 +138,7 @@ const Categories = ({ categories }) => {
   return (
     <AdminLayout>
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-2xl font-semibold mb-6 text-gray-800">
-          Categories
-        </h1>
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800">Products</h1>
         <FlashMessage message={flash.success} type="success" />
         <FlashMessage message={flash.error} type="error" />
 
@@ -179,4 +221,4 @@ const Categories = ({ categories }) => {
   );
 };
 
-export default Categories;
+export default Products;

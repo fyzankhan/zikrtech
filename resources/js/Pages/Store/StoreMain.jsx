@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import StoreLayout from "@/Layouts/StoreLayout";
 import StoreBanner from "@/Components/Store/StoreBanner";
 import Brands from "@/Components/Store/Brands";
+import { Head } from "@inertiajs/react";
 
 const StoreMain = ({ sliders }) => {
   useEffect(() => {
@@ -19,6 +20,7 @@ const StoreMain = ({ sliders }) => {
   return (
     <div>
       <StoreLayout>
+        <Head title="Store" />
         <div className="w-full  pt-[30px] pb-[60px]">
           <div className="btn w-5 h-5 " />
           <StoreBanner banners={sliders}></StoreBanner>

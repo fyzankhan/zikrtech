@@ -6725,3 +6725,62 @@ hr {
 
     display: block;
 }
+
+/* The switch - the box around the slider */
+.switch-btn {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch-btn input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider-btn {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider-btn:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  /* Checked state styling */
+  input:checked + .slider-btn {
+    background-color: #4caf50;
+  }
+  
+  input:checked + .slider-btn:before {
+    transform: translateX(14px);
+  }
+  
+  /* Rounded sliders */
+  .slider-btn.round-slider-btn {
+    border-radius: 34px;
+  }
+  
+  .slider-btn.round-slider-btn:before {
+    border-radius: 50%;
+  }
+  

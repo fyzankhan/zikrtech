@@ -55,4 +55,9 @@ class CategoryRepository implements CategoryInterface
     {
         return Category::paginate($perPage);
     }
+
+    public function query()
+    {
+        return Category::query();
+    }
 }

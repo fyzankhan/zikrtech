@@ -5,10 +5,12 @@ import ListItem from "@/Components/Landing/ListItem";
 import Navbar from "@/Components/Landing/Navbar";
 import Website from "@/Components/Landing/Website";
 import Footer from "@/Components/Landing/Footer";
+import { Head } from "@inertiajs/react";
 
 export default function Landing() {
   return (
     <GuestLayout>
+      <Head title="Home" />
       <div
         className="w-[280px] transition-all duration-300 ease-in-out h-screen overflow-y-auto overflow-x-hidden overflow-style-none bg-white fixed left-0 top-0 z-50-left-[280px]"
         style={{ display: "none" }}

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\BrandDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Product;
-use App\Traits\ImageUploadTrait;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Cell\IValueBinder;
-use Str;
 use App\Http\Requests\BrandStoreRequest;
 use App\Http\Requests\BrandUpdateRequest;
 use App\Repositories\Backend\Brand\BrandInterface;
+use App\Traits\ImageUploadTrait;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Str;
 
 class BrandController extends Controller
 {
@@ -27,116 +23,71 @@ class BrandController extends Controller
         $this->brandRepository = $brandRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $brands = $this->brandRepository->paginate(10);
+        $query = $this->brandRepository->query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('name', 'LIKE', "%{$search}%")
+                ->orWhere('slug', 'LIKE', "%{$search}%");
+        }
+
+        $brands = $query->paginate(10);
+
         return Inertia::render($this->directory . 'Index', [
-            'brands' => $brands
+            'brands' => $brands,
+            'search' => $request->get('search')
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('admin.brand.create');
+        return Inertia::render($this->directory . 'Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(BrandStoreRequest $request)
     {
-        $request->validate([
-            'logo' => ['image', 'required', 'max:2000'],
-            'name' => ['required', 'max:200'],
-            'is_featured' => ['required'],
-            'status' => ['required']
-        ]);
+        $data = $request->validated();
+        $data['logo'] = $this->uploadImage($request, 'logo', 'uploads/brands');
+        $data['slug'] = Str::slug($data['name']);
 
-        $logoPath = $this->uploadImage($request, 'logo', 'uploads');
-        $brand = new Brand();
+        $this->brandRepository->create($data);
 
-        $brand->logo = $logoPath;
-        $brand->name = $request->name;
-        $brand->slug = Str::slug($request->name);
-        $brand->is_featured = $request->is_featured;
-        $brand->status = $request->status;
-        $brand->save();
-
-        toastr('Created Successfully!', 'success');
-        return redirect()->route('admin.brand.index');
+        return redirect()->route('admin.brand.index')->with('success', 'Created Successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-
         $brand = $this->brandRepository->findById($id);
+
         return Inertia::render($this->directory . 'Edit', [
             'brand' => $brand
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(BrandUpdateRequest $request, string $id)
     {
-        $request->validate([
-            'logo' => ['image', 'max:2000'],
-            'name' => ['required', 'max:200'],
-            'is_featured' => ['required'],
-            'status' => ['required']
-        ]);
+        $data = $request->validated();
+        $brand = $this->brandRepository->findById($id);
 
-        $brand = Brand::findOrFail($id);
-
-        $logoPath = $this->updateBrandImage($request, 'logo', 'uploads/brands', $brand->logo);
-
-        $brand->logo = empty(!$logoPath) ? $logoPath : $brand->logo;
-        $brand->name = $request->name;
-        $brand->slug = Str::slug($request->name);
-        $brand->is_featured = $request->is_featured;
-        $brand->status = $request->status;
-        $brand->save();
-
-        return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully!')->setStatusCode(303);
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $brand = Brand::findOrFail($id);
-        if (Product::where('brand_id', $brand->id)->count() > 0) {
-            return response(['status' => 'error', 'message' => 'This brand have products you can\'t delete it.']);
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $this->updateBrandImage($request, 'logo', 'uploads/brands', $brand->logo);
         }
-        $this->deleteImage($brand->logo);
-        $brand->delete();
 
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        $data['slug'] = Str::slug($data['name']);
+
+        $this->brandRepository->update($data, $id);
+
+        return redirect()->route('admin.brand.index')->with('success', 'Brand updated successfully!');
     }
+
+
 
     public function changeStatus(Request $request)
     {
-        $brand = Brand::findOrFail($request->id);
-        $brand->status = $request->status == 'true' ? 1 : 0;
-        $brand->save();
+        $brand = $this->brandRepository->changeStatus($request->id, $request->status == 'true');
 
-        return response(['message' => 'Status has been updated!']);
+        return response()->json(['message' => 'Status has been updated!']);
     }
 }

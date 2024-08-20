@@ -1,5 +1,5 @@
-import React from "react";
-import { router as Inertia } from "@inertiajs/react";
+import React, { useMemo } from "react";
+import { router as Inertia, usePage } from "@inertiajs/react";
 import {
   useTable,
   useSortBy,
@@ -7,22 +7,22 @@ import {
   useGlobalFilter,
 } from "react-table";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { usePage } from "@inertiajs/react";
 import FlashMessage from "@/components/FlashMessage";
 import EditIcon from "@/Components/Icon/EditIcon";
 
-function Brands({ brands }) {
+const Brands = ({ brands }) => {
   const {
-    data: categoryData,
+    data: brandData,
     current_page,
     last_page,
     next_page_url,
     prev_page_url,
   } = brands;
-  const data = React.useMemo(() => categoryData, [categoryData]);
   const { flash } = usePage().props;
 
-  const columns = React.useMemo(
+  const data = useMemo(() => brandData, [brandData]);
+
+  const columns = useMemo(
     () => [
       {
         Header: "Name",
@@ -48,16 +48,12 @@ function Brands({ brands }) {
       {
         Header: " ",
         Cell: ({ row }) => (
-          <div>
-            <button
-              onClick={() =>
-                Inertia.get(`/admin/brands/${row.original.id}/edit`)
-              }
-              className="btn btn-sm btn-primary"
-            >
-              <EditIcon></EditIcon>
-            </button>
-          </div>
+          <button
+            onClick={() => Inertia.get(`/admin/brands/${row.original.id}/edit`)}
+            className="btn btn-sm btn-primary"
+          >
+            <EditIcon />
+          </button>
         ),
       },
     ],
@@ -71,7 +67,6 @@ function Brands({ brands }) {
     prepareRow,
     page,
     state,
-    setGlobalFilter,
   } = useTable(
     { columns, data, manualPagination: true, pageCount: last_page },
     useGlobalFilter,
@@ -79,19 +74,20 @@ function Brands({ brands }) {
     usePagination
   );
 
-  const { pageIndex } = state;
+  const handleSearch = (e) => {
+    const searchQuery = e.target.value || "";
+    Inertia.get(
+      "/admin/brands",
+      { search: searchQuery },
+      { preserveState: true }
+    );
+  };
 
-  function handleDelete(id) {
-    if (confirm("Are you sure you want to delete this brand?")) {
-      Inertia.delete(`/admin/brands/${id}`);
-    }
-  }
-
-  function handlePageChange(url) {
+  const handlePageChange = (url) => {
     if (url) {
       Inertia.get(url, {}, { preserveState: true });
     }
-  }
+  };
 
   return (
     <AdminLayout>
@@ -105,7 +101,7 @@ function Brands({ brands }) {
             type="text"
             placeholder="Search..."
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200 focus:outline-none"
-            onChange={(e) => setGlobalFilter(e.target.value || undefined)}
+            onChange={handleSearch}
           />
         </div>
 
@@ -177,6 +173,6 @@ function Brands({ brands }) {
       </div>
     </AdminLayout>
   );
-}
+};
 
 export default Brands;

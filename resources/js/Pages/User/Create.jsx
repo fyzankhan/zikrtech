@@ -29,7 +29,7 @@ export default function Create({ auth }) {
         </div>
       }
     >
-      <Head title="Users" />
+      <Head title="Create Users" />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

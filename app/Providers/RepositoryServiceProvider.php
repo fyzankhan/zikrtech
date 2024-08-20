@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Backend\Product\ProductInterface;
+use App\Repositories\Backend\Product\ProductRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Blog\BlogCategoryInterface;
 use App\Repositories\Blog\BlogCategoryRepository;
@@ -22,6 +24,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BlogCategoryInterface::class, BlogCategoryRepository::class);
         $this->app->bind(CategoryInterface::class, CategoryRepository::class);
         $this->app->bind(BrandInterface::class, BrandRepository::class);
+        $this->app->bind(ProductInterface::class, ProductRepository::class);
     }
 
     /**
