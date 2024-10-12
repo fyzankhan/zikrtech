@@ -41,20 +41,20 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return inertia('admin.category.create');
+
+        return Inertia::render($this->directory . 'Create');
     }
 
     public function store(CategoryStoreRequest $request)
     {
         $this->categoryRepository->create($request->validated());
 
-        toastr('Created Successfully!', 'success');
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Category Created Successfully!');
     }
 
     public function edit($id)
     {
-
 
         $category = $this->categoryRepository->findById($id);
         return Inertia::render($this->directory . 'Edit', [
@@ -86,5 +86,17 @@ class CategoryController extends Controller
         $this->categoryRepository->changeStatus($request->id, $request->status);
 
         return response(['message' => 'Status has been updated!']);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $this->categoryRepository->query();
+        if ($request->has('query')) {
+            $search = $request->get('query');
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+        $categories = $query->paginate(10);
+        return response()->json($categories);
+
     }
 }

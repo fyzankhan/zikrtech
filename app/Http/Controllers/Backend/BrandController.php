@@ -54,7 +54,7 @@ class BrandController extends Controller
 
         $this->brandRepository->create($data);
 
-        return redirect()->route('admin.brand.index')->with('success', 'Created Successfully!');
+        return redirect()->route('admin.brands.index')->with('success', 'Created Successfully!');
     }
 
     public function edit(string $id)
@@ -75,11 +75,10 @@ class BrandController extends Controller
             $data['logo'] = $this->updateBrandImage($request, 'logo', 'uploads/brands', $brand->logo);
         }
 
-        $data['slug'] = Str::slug($data['name']);
 
         $this->brandRepository->update($data, $id);
 
-        return redirect()->route('admin.brand.index')->with('success', 'Brand updated successfully!');
+        return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully!');
     }
 
 
@@ -89,5 +88,17 @@ class BrandController extends Controller
         $brand = $this->brandRepository->changeStatus($request->id, $request->status == 'true');
 
         return response()->json(['message' => 'Status has been updated!']);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $this->brandRepository->query();
+        if ($request->has('query')) {
+            $search = $request->get('query');
+            $query->where('name', 'LIKE', "%{$search}%");
+        }
+        $brands = $query->paginate(10);
+        return response()->json($brands);
+
     }
 }

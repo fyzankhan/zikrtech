@@ -4,7 +4,7 @@ const EditIcon = () => {
       <svg
         className="feather feather-edit"
         fill="none"
-        height={24}
+        height={20}
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"

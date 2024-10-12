@@ -39,7 +39,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 
 // use App\Http\Controllers\Backend\StripeSettingController;
-// use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SubCategoryController;
 // use App\Http\Controllers\Backend\SubscribersController;
 // use App\Http\Controllers\Backend\TermsAndConditionController;
 // use App\Http\Controllers\Backend\TransactionController;
@@ -64,17 +64,16 @@ use App\Http\Controllers\Backend\SliderController;
 // /** Slider Route */
 Route::resource('sliders', SliderController::class);
 // /** Category Route */
+Route::get('categories/search', [CategoryController::class, 'search']);
 Route::put('change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
 Route::resource('categories', CategoryController::class);
 // /** Sub Category Route */
-// Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.change-status');
-// Route::resource('sub-category', SubCategoryController::class);
-// /** Child Category Route */
-
-// Route::get('get-subcategories', [ChildCategoryController::class, 'getSubCategories'])->name('get-subcategories');
+Route::put('subcategory/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.change-status');
+Route::resource('sub-categories', SubCategoryController::class);
 
 
 // /** Brand routes */
+Route::get('brands/search', [BrandController::class, 'search']);
 Route::put('brand/change-status', [BrandController::class, 'changeStatus'])->name('brand.change-status');
 Route::resource('brands', BrandController::class);
 

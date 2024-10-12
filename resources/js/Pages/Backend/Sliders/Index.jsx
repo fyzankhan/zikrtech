@@ -81,9 +81,7 @@ function Sliders({ sliders }) {
     <AdminLayout>
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Sliders
-          </h2>
+          <h2 className="font-semibold text-xl  leading-tight">Banners</h2>
           <Link
             href="sliders/create"
             className="bg-emerald-500 py-1 mb-4 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"

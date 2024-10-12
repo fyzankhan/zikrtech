@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoryUpdateRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class CategoryUpdateRequest extends FormRequest
     {
         return [
             //'icon' => ['required', 'not_in:empty'],
-            'name' => ['required', 'max:200', 'unique:categories,name,' . $this->id],
+            'name' => ['required', 'max:200', Rule::unique('categories', 'name')->ignore($this->route('category')),],
             'status' => ['required']
         ];
     }

@@ -2,12 +2,13 @@ import { Link } from "@inertiajs/react";
 import DownArrow from "../Icon/DownArrow";
 import Logo from "../Media/Logo";
 import NavBrandCategories from "./NavBrandCategories";
+import MenuNav from "./MenuNav";
 
 const Header = () => {
   return (
     <>
       <header className="  header-section-wrapper relative">
-        <div className="w-full bg-white h-10 border-b border-qgray-border quomodo-shop-top-bar">
+        <div className="w-full bg-grey h-10 border-b border-qgray-border quomodo-shop-top-bar">
           <div className="container-x mx-auto h-full">
             <div className="flex justify-between items-center h-full">
               <div className="topbar-nav">
@@ -15,21 +16,14 @@ const Header = () => {
                   <li>
                     <a href="/">
                       <span className="text-xs leading-6 text-qblack font-500">
-                        Account
+                        000-000-0000
                       </span>
                     </a>
                   </li>
                   <li>
                     <a href="/tracking-order">
                       <span className="text-xs leading-6 text-qblack font-500">
-                        Track Order
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/faq">
-                      <span className="text-xs leading-6 text-qblack font-500">
-                        Support
+                        sales@zikrtech.com
                       </span>
                     </a>
                   </li>
@@ -37,125 +31,26 @@ const Header = () => {
               </div>
               <div className="topbar-dropdowns sm:block hidden">
                 <div className="flex space-x-6">
-                  <div className="country-select flex space-x-1 items-center">
+                  <div className="flex space-x-1 items-center">
                     <div>
-                      <img
-                        src="/assets/images/country-logo-16x16.png"
-                        width={16}
-                        height={16}
-                        alt="country logo"
-                        className="overflow-hidden rounded-full"
-                      />
-                    </div>
-                    <div className="my-select-box w-fit">
-                      <button type="button" className="my-select-box-btn ">
-                        <span>United State</span>
-                      </button>
-                      <div className="my-select-box-section ">
-                        <ul className="list">
-                          <li className="selected">United State</li>
-                          <li className="">Bangladesh</li>
-                          <li className="">India</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div>
-                      <svg
-                        width={10}
-                        height={5}
-                        viewBox="0 0 10 5"
-                        fill="none"
-                        className="fill-current qblack"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          x="9.18359"
-                          y="0.90918"
-                          width="5.78538"
-                          height="1.28564"
-                          transform="rotate(135 9.18359 0.90918)"
-                        />
-                        <rect
-                          x="5.08984"
-                          y={5}
-                          width="5.78538"
-                          height="1.28564"
-                          transform="rotate(-135 5.08984 5)"
-                        />
-                      </svg>
+                      <a href="/">
+                        <span className="text-xs leading-6 text-qblack font-500">
+                          Login
+                        </span>
+                      </a>
                     </div>
                   </div>
-                  <div className="currency-select flex space-x-1 items-center">
-                    <div className="my-select-box w-fit">
-                      <button type="button" className="my-select-box-btn ">
-                        <span>USD</span>
-                      </button>
-                      <div className="my-select-box-section ">
-                        <ul className="list">
-                          <li className="selected">USD</li>
-                          <li className="">BDT</li>
-                        </ul>
-                      </div>
-                    </div>
-                    <svg
-                      width={10}
-                      height={5}
-                      viewBox="0 0 10 5"
-                      fill="none"
-                      className="fill-current qblack"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="9.18359"
-                        y="0.90918"
-                        width="5.78538"
-                        height="1.28564"
-                        transform="rotate(135 9.18359 0.90918)"
-                      />
-                      <rect
-                        x="5.08984"
-                        y={5}
-                        width="5.78538"
-                        height="1.28564"
-                        transform="rotate(-135 5.08984 5)"
-                      />
-                    </svg>
+                  <div className="flex space-x-1 items-center">
+                    <div>|</div>
                   </div>
-                  <div className="language-select flex space-x-1 items-center">
-                    <div className="my-select-box w-fit">
-                      <button type="button" className="my-select-box-btn ">
-                        <span>Bangla</span>
-                      </button>
-                      <div className="my-select-box-section ">
-                        <ul className="list">
-                          <li className="selected">Bangla</li>
-                          <li className="">english</li>
-                        </ul>
-                      </div>
+                  <div className="flex space-x-1 items-center">
+                    <div>
+                      <a href="/">
+                        <span className="text-xs leading-6 text-qblack font-500">
+                          Signup
+                        </span>
+                      </a>
                     </div>
-                    <svg
-                      width={10}
-                      height={5}
-                      viewBox="0 0 10 5"
-                      fill="none"
-                      className="fill-current qblack"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="9.18359"
-                        y="0.90918"
-                        width="5.78538"
-                        height="1.28564"
-                        transform="rotate(135 9.18359 0.90918)"
-                      />
-                      <rect
-                        x="5.08984"
-                        y={5}
-                        width="5.78538"
-                        height="1.28564"
-                        transform="rotate(-135 5.08984 5)"
-                      />
-                    </svg>
                   </div>
                 </div>
               </div>
@@ -178,20 +73,11 @@ const Header = () => {
                         <input
                           type="text"
                           className="search-input"
-                          placeholder="Search Product..."
+                          placeholder="Search for Products, Brands and More..."
                         />
                       </form>
                     </div>
-                    <div className="w-[1px] h-[22px] bg-qgray-border" />
-                    <div className="flex-1 flex items-center px-4">
-                      <button
-                        type="button"
-                        className="w-full text-xs font-500 text-qgray flex justify-between items-center"
-                      >
-                        <span>All Categories</span>
-                        <span></span>
-                      </button>
-                    </div>
+
                     <button
                       className=" w-[93px] h-full text-sm font-600  search-btn"
                       type="button"
@@ -201,52 +87,6 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="flex space-x-6 items-center">
-                  <div className="compaire relative">
-                    <a href="/products-compaire">
-                      <span>
-                        <svg
-                          width={20}
-                          height={22}
-                          viewBox="0 0 20 22"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M8.33556 0.70842C8.33556 1.09592 8.32306 1.41675 8.31056 1.41675C8.29806 1.41675 8.09389 1.45425 7.86473 1.50425C3.90639 2.30425 0.952225 5.43342 0.402225 9.40843C0.273058 10.3168 0.327225 11.7001 0.523058 12.6251C1.01889 14.9918 2.55639 17.2126 4.58973 18.5126L4.82722 18.6626L5.41472 18.2209C5.73556 17.9793 6.00222 17.7709 6.00222 17.7543C6.00222 17.7418 5.89806 17.6751 5.77306 17.6084C5.13556 17.2751 4.30639 16.6084 3.74389 15.9793C2.67722 14.7834 1.99389 13.3251 1.77306 11.7918C1.69389 11.2251 1.69389 10.1001 1.77306 9.56259C1.94389 8.42509 2.34389 7.35009 2.94389 6.40842C3.69389 5.23759 4.83556 4.21259 6.08556 3.58342C6.71889 3.26676 7.59806 2.96675 8.20223 2.85842L8.33556 2.83342V3.41675C8.33556 3.73759 8.34389 4.00009 8.35639 4.00009C8.39806 4.00009 11.0022 2.02925 11.0022 2.00009C11.0022 1.97092 8.39806 8.58307e-05 8.35639 8.58307e-05C8.34389 8.58307e-05 8.33556 0.316753 8.33556 0.70842Z"
-                            fill="black"
-                          />
-                          <path
-                            d="M13.9234 3.11266C13.6026 3.35432 13.3443 3.56682 13.3568 3.58349C13.3693 3.60432 13.4943 3.68349 13.6401 3.76266C14.8609 4.45432 15.9984 5.62099 16.7026 6.91683C17.1276 7.69599 17.4859 8.82933 17.5859 9.71266C17.6693 10.4085 17.6193 11.6043 17.4859 12.2377C16.9109 14.9627 15.0151 17.1585 12.3984 18.1335C12.0693 18.2543 11.1776 18.5002 11.0609 18.5002C11.0151 18.5002 11.0026 18.396 11.0026 17.9168C11.0026 17.596 10.9943 17.3335 10.9818 17.3335C10.9401 17.3335 8.33594 19.3043 8.33594 19.3335C8.33594 19.3627 10.9401 21.3335 10.9818 21.3335C10.9943 21.3335 11.0026 21.0168 11.0026 20.6252V19.921L11.1609 19.896C11.5484 19.8335 12.6443 19.5377 13.0026 19.396C16.2526 18.1252 18.4776 15.3085 18.9401 11.8752C19.0609 10.9918 19.0068 9.60849 18.8151 8.70849C18.3193 6.34183 16.7818 4.12099 14.7484 2.82099L14.5109 2.67099L13.9234 3.11266Z"
-                            fill="black"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <span className="w-[18px] h-[18px] rounded-full  absolute -top-2.5 -right-2.5 flex justify-center items-center text-[9px] bg-qyellow">
-                      2
-                    </span>
-                  </div>
-                  <div className="favorite relative">
-                    <a href="/wishlist">
-                      <span>
-                        <svg
-                          width={21}
-                          height={18}
-                          viewBox="0 0 21 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M4.97214 0.0251923C3.71435 0.183434 2.6616 0.701674 1.7705 1.60365C0.970091 2.41068 0.489057 3.26519 0.213053 4.37683C-0.275867 6.30342 0.0789948 8.20232 1.25398 9.98649C2.00708 11.1298 2.98097 12.1781 4.76711 13.7764C5.90266 14.7931 9.36848 17.7601 9.53802 17.859C9.69574 17.954 9.75488 17.9658 10.09 17.9658C10.4252 17.9658 10.4843 17.954 10.642 17.859C10.8116 17.7601 14.2853 14.7891 15.413 13.7764C17.207 12.1702 18.173 11.1258 18.9261 9.98649C20.1011 8.20232 20.4559 6.30342 19.967 4.37683C19.691 3.26519 19.21 2.41068 18.4096 1.60365C17.6131 0.800575 16.7614 0.337719 15.6456 0.100357C15.0857 -0.0183239 14.0526 -0.0301933 13.5637 0.0805759C12.1995 0.377279 11.1546 1.06167 10.2004 2.28013L10.09 2.41859L9.98357 2.28013C9.04122 1.08541 8.01212 0.401016 6.69913 0.100357C6.30878 0.00936699 5.4098 -0.0301933 4.97214 0.0251923ZM6.28907 1.23178C7.40885 1.42958 8.37487 2.07837 9.13979 3.15046C9.26991 3.3364 9.43156 3.55793 9.49465 3.64892C9.78643 4.06035 10.3936 4.06035 10.6854 3.64892C10.7485 3.55793 10.9102 3.3364 11.0403 3.15046C12.0851 1.68673 13.5401 0.998377 15.1251 1.21596C16.8837 1.45728 18.2558 2.69156 18.7802 4.50738C19.1942 5.94342 19.0128 7.45067 18.2597 8.80759C17.6289 9.94298 16.5761 11.1337 14.7427 12.7834C13.8555 13.5786 10.1255 16.7988 10.09 16.7988C10.0506 16.7988 6.33638 13.5904 5.4374 12.7834C2.61823 10.2476 1.50633 8.66518 1.23821 6.8098C1.06472 5.61112 1.31312 4.32145 1.91639 3.30475C2.82326 1.77376 4.58968 0.935081 6.28907 1.23178Z"
-                            fill="black"
-                          />
-                        </svg>
-                      </span>
-                    </a>
-                    <span className="w-[18px] h-[18px] rounded-full  absolute -top-2.5 -right-2.5 flex justify-center items-center text-[9px] bg-qyellow">
-                      1
-                    </span>
-                  </div>
                   <div className="cart-wrapper group relative py-4">
                     <div className="cart relative cursor-pointer">
                       <a href="/cart">
@@ -591,346 +431,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className="nav-widget-wrapper w-full  h-[60px] relative z-30 bg-qyellow  quomodo-shop-nav-bar lg:block hidden">
-          <div className="container-x mx-auto h-full">
-            <div className="w-full h-full relative">
-              <div className="w-full h-full flex justify-between items-center">
-                <div className="category-and-nav flex xl:space-x-7 space-x-3 items-center">
-                  <NavBrandCategories></NavBrandCategories>
-                  <div className="nav">
-                    <ul className="nav-wrapper flex xl:space-x-10 space-x-5">
-                      <li>
-                        <Link href="/store">
-                          <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                            <span>Home</span>
-                          </span>
-                        </Link>
-                      </li>
-                      <li>
-                        <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                          <span>Shop</span>
-                          <span className="ml-1.5 ">
-                            <svg
-                              width={10}
-                              height={5}
-                              viewBox="0 0 10 5"
-                              fill="none"
-                              className="fill-current"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <rect
-                                x="9.18359"
-                                y="0.90918"
-                                width="5.78538"
-                                height="1.28564"
-                                transform="rotate(135 9.18359 0.90918)"
-                              />
-                              <rect
-                                x="5.08984"
-                                y={5}
-                                width="5.78538"
-                                height="1.28564"
-                                transform="rotate(-135 5.08984 5)"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        <div className="sub-menu w-full absolute left-0 top-[60px]">
-                          <div
-                            className="mega-menu-wrapper w-full bg-white p-[30px] flex justify-between items-center "
-                            style={{
-                              minHeight: 295,
-                              boxShadow:
-                                "rgba(0, 0, 0, 0.14) 0px 15px 50px 0px",
-                            }}
-                          >
-                            <div className="categories-wrapper flex-1 h-full flex justify-around -ml-[70px]">
-                              <div>
-                                <div className="category">
-                                  <h1 className="text-[13px] font-700 text-qblack uppercase mb-[13px]">
-                                    Shop List
-                                  </h1>
-                                </div>
-                                <div className="category-items">
-                                  <ul className="flex flex-col space-y-2">
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop Sidebar
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop Fullwidth
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop Category Icon
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop Category Icon
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop List View
-                                        </span>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div>
-                                <div className="category">
-                                  <h1 className="text-[13px] font-700 text-qblack uppercase mb-[13px]">
-                                    Product Layouts
-                                  </h1>
-                                </div>
-                                <div className="category-items">
-                                  <ul className="flex flex-col space-y-2">
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Horizonral Thumbnail
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Vertical Thumbnail
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Gallery Thumbnail
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Sticky Summary
-                                        </span>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div>
-                                <div className="category">
-                                  <h1 className="text-[13px] font-700 text-qblack uppercase mb-[13px]">
-                                    Polular Category
-                                  </h1>
-                                </div>
-                                <div className="category-items">
-                                  <ul className="flex flex-col space-y-2">
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Phone &amp; Tablet
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Gaming &amp; Sports
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Home Appliance
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Fashion Clothes
-                                        </span>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="thumbnil w-[348px] h-full">
-                              <div className="w-full h-[235px]">
-                                <img
-                                  width=""
-                                  src="/assets/images/mega-menu-thumb.jpg"
-                                  alt=""
-                                  className="w-full h-full object-contain"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="relative">
-                        <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                          <span>Pages</span>
-                          <span className="ml-1.5 ">
-                            <svg
-                              width={10}
-                              height={5}
-                              viewBox="0 0 10 5"
-                              fill="none"
-                              className="fill-current"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <rect
-                                x="9.18359"
-                                y="0.90918"
-                                width="5.78538"
-                                height="1.28564"
-                                transform="rotate(135 9.18359 0.90918)"
-                              />
-                              <rect
-                                x="5.08984"
-                                y={5}
-                                width="5.78538"
-                                height="1.28564"
-                                transform="rotate(-135 5.08984 5)"
-                              />
-                            </svg>
-                          </span>
-                        </span>
-                        <div className="sub-menu w-[220px] absolute left-0 top-[60px]">
-                          <div
-                            className="w-full bg-white flex justify-between items-center "
-                            style={{
-                              boxShadow:
-                                "rgba(0, 0, 0, 0.14) 0px 15px 50px 0px",
-                            }}
-                          >
-                            <div className="categories-wrapper w-full h-full p-5">
-                              <div>
-                                <div className="category-items">
-                                  <ul className="flex flex-col space-y-2">
-                                    <li>
-                                      <a href="/privacy-policy">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Privacy Policy
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/terms-condition">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Terms and Conditions
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/faq">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          FAQ
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop Category Icon
-                                        </span>
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a href="/all-products">
-                                        <span className="text-qgray text-sm font-400 border-b border-transparent   hover:text-qyellow hover:border-qyellow">
-                                          Shop List View
-                                        </span>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <a href="/about">
-                          <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                            <span>About</span>
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/blogs">
-                          <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                            <span>Blog</span>
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/contact">
-                          <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
-                            <span>Contact</span>
-                          </span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="become-seller-btn">
-                  <a href="/become-saller">
-                    <div className="black-btn w-[161px] h-[40px] flex justify-center items-center cursor-pointer">
-                      <div className="flex space-x-2 items-center">
-                        <span className="text-sm font-600">
-                          Become a Seller
-                        </span>
-                        <span>
-                          <svg
-                            className="fill-current"
-                            width={6}
-                            height={10}
-                            viewBox="0 0 6 10"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              x="1.08984"
-                              width="6.94106"
-                              height="1.54246"
-                              transform="rotate(45 1.08984 0)"
-                              fill="white"
-                            />
-                            <rect
-                              x={6}
-                              y="4.9082"
-                              width="6.94106"
-                              height="1.54246"
-                              transform="rotate(135 6 4.9082)"
-                              fill="white"
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <MenuNav></MenuNav>
       </header>
     </>
   );

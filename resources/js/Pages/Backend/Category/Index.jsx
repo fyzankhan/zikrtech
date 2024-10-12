@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { router as Inertia, usePage } from "@inertiajs/react";
+import { router as Inertia, Link, usePage } from "@inertiajs/react";
 import {
   useTable,
   useSortBy,
@@ -94,9 +94,17 @@ const Categories = ({ categories }) => {
   return (
     <AdminLayout>
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-2xl font-semibold mb-6 text-gray-800">
-          Categories
-        </h1>
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+            Categories
+          </h2>
+          <Link
+            href="categories/create"
+            className="bg-emerald-500 py-1 mb-4 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+          >
+            Add new
+          </Link>
+        </div>
         <FlashMessage message={flash.success} type="success" />
         <FlashMessage message={flash.error} type="error" />
 

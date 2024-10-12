@@ -1,21 +1,8 @@
 const Footer = () => {
   return (
     <>
-      <footer className="footer-section-wrapper bg-white print:hidden">
+      <footer className="footer-section-wrapper print:hidden background-[#ebebeb]">
         <div className="container-x block mx-auto pt-[56px]">
-          <div className="w-full flex flex-col items-center mb-[50px]">
-            <div className="mb-[40px]">
-              <a href="/">
-                <img
-                  width={152}
-                  height={36}
-                  src="/assets/images/logo.svg"
-                  alt="logo"
-                />
-              </a>
-            </div>
-            <div className="w-full h-[1px] bg-[#E9E9E9]" />
-          </div>
           <div className="lg:flex justify-between mb-[50px]">
             <div className="lg:w-[424px]  ml-0 w-full mb-10 lg:mb-0">
               <h1 className="text-[18] font-500 text-[#2F2F2F] mb-5">
@@ -170,16 +157,7 @@ const Footer = () => {
                 </a>
               </div>
               <span className="sm:text-base text-[10px] text-qgray font-300">
-                ©2022
-                <a
-                  href="https://quomodosoft.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-500 text-qblack mx-1"
-                >
-                  Quomodosoft
-                </a>
-                All rights reserved
+                ©2024 All rights reserved
               </span>
             </div>
             <div className="">

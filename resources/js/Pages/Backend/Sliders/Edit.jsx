@@ -29,7 +29,7 @@ const EditSlider = ({ slider }) => {
       const response = await fetch(route("admin.sliders.update", slider.id), {
         method: "POST",
         headers: {
-          "X-HTTP-Method-Override": "PUT", // Spoofing the method
+          "X-HTTP-Method-Override": "PUT",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
             .content,
         },

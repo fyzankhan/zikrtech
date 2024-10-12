@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\ApiController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\MainController;
@@ -10,15 +11,41 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route::redirect('/', '/dashboard');
-Route::get('/', [MainController::class, 'landing'])
-    ->name('landing-page');
+
+
+Route::get('/', [StoreController::class, 'index'])->name('index');
+Route::get('/all-products', [StoreController::class, 'products'])->name('products.index');
+Route::get('/load-more-products', [StoreController::class, 'loadMoreProducts'])->name('products.loadMore');
+
+
+/** Cart routes */
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('cart-details', [CartController::class, 'cartDetails'])->name('cart-details');
+Route::post('cart/update-quantity', [CartController::class, 'updateProductQty'])->name('cart.update-quantity');
+Route::get('clear-cart', [CartController::class, 'clearCart'])->name('clear.cart');
+Route::get('cart/remove-product/{rowId}', [CartController::class, 'removeProduct'])->name('cart.remove-product');
+Route::get('cart-count', [CartController::class, 'getCartCount'])->name('cart-count');
+Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('cart-products');
+Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
+Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 
 
 
-Route::get('/store', [StoreController::class, 'index'])
-    ->name('store.index');
 
+
+//api
+
+Route::get('home/featured', [StoreController::class, 'featured'])->name('home.featured');
+
+
+
+
+
+Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
+Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
+
+
+Route::get('/store/product/{slug}', [StoreController::class, 'showProduct'])->name('product.show');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
