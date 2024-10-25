@@ -53,7 +53,7 @@ const Product = ({ product }) => {
                 <div className="container-x mx-auto">
                   <div className="breadcrumb-wrapper font-400 text-[13px] text-qblack mb-[23px]">
                     <span>
-                      <Link href="/store">
+                      <Link href="/">
                         <span className="mx-1 capitalize">Home</span>
                       </Link>
                       <span className="sperator">/</span>

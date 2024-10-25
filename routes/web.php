@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\Frontend\ApiController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\ProfileController;
@@ -17,6 +17,8 @@ Route::get('/', [StoreController::class, 'index'])->name('index');
 Route::get('/all-products', [StoreController::class, 'products'])->name('products.index');
 Route::get('/load-more-products', [StoreController::class, 'loadMoreProducts'])->name('products.loadMore');
 
+Route::get('/category/{slug}', [StoreController::class, 'products'])->name('products.category');
+
 
 /** Cart routes */
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
@@ -29,6 +31,9 @@ Route::get('cart-products', [CartController::class, 'getCartProducts'])->name('c
 Route::post('cart/remove-sidebar-product', [CartController::class, 'removeSidebarProduct'])->name('cart.remove-sidebar-product');
 Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->name('cart.sidebar-product-total');
 
+Route::get('nav-cart-products', [CartController::class, 'getNavCartProducts'])->name('nav-cart-products');
+Route::get('checkout', [StoreController::class, 'checkout'])->name('checkout');
+Route::get('cart', [StoreController::class, 'cart'])->name('cart');
 
 
 
@@ -37,6 +42,7 @@ Route::get('cart/sidebar-product-total', [CartController::class, 'cartTotal'])->
 
 Route::get('home/featured', [StoreController::class, 'featured'])->name('home.featured');
 
+Route::get('api/hardware-menu', [StoreController::class, 'hardwareMenu'])->name('home.hardware-menu');
 
 
 
@@ -46,9 +52,9 @@ Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->
 
 
 Route::get('/store/product/{slug}', [StoreController::class, 'showProduct'])->name('product.show');
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
+
     Route::resource('user', UserController::class);
 });
 

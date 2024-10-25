@@ -34,7 +34,7 @@ const HomeFeatured = () => {
           <div className="section-title flex justify-between items-center mb-5">
             <div>
               <h1 className="sm:text-3xl text-xl font-600 text-qblacktext leading-none">
-                Featured
+                Featured Products
               </h1>
             </div>
             <div>

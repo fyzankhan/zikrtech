@@ -22,7 +22,7 @@ const StoreBanner = ({ banners }) => {
                       srcSet={"/" + banner1?.banner}
                     />
                     <img
-                      src="/assets/images/banner-1.2.png"
+                      src="/assets/images/banner-1.png"
                       alt=""
                       className="w-full max-w-full h-auto object-cover"
                     />

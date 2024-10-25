@@ -6,7 +6,7 @@ const TechSolution = () => {
           <div className=" section-title flex justify-between items-center mb-5">
             <div>
               <h1 className="sm:text-3xl text-xl font-600 text-qblacktext leading-none">
-                Technology Solutions
+                Empowering Your Business with Confidence and Support
               </h1>
             </div>
             <div>

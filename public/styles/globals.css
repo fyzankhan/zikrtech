@@ -3731,7 +3731,6 @@ video {
     padding: 0;
 }
 html {
-    background-color: #f8f8f8;
     font-family: Inter, sans-serif;
 }
 body {
@@ -6786,4 +6785,8 @@ input:checked + .slider-btn:before {
 
 .search-btn {
     background-color: rgb(255 187 56 / 1) !important;
+}
+
+footer {
+    background-color: #f8f8f8;
 }

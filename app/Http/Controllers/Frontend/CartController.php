@@ -137,6 +137,23 @@ class CartController extends Controller
         return Cart::content();
     }
 
+
+    public function getNavCartProducts()
+    {
+        //class Gloudemans\Shoppingcart\Facades\Cart extends \Illuminate\Support\Facades\Facade
+
+        // return Cart::content();
+
+        $cartContent = Cart::content();
+
+        // Return as JSON response for frontend consumption
+        return response()->json([
+            'cartContent' => $cartContent,
+            'subtotal' => Cart::subtotal()
+        ]);
+    }
+
+
     /** Romve product form sidebar cart */
     public function removeSidebarProduct(Request $request)
     {

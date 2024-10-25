@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\SubCategory;
 use Cache;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,16 +26,7 @@ class StoreController extends Controller
 
     }
 
-    public function products(Request $request)
-    {
-        $products = Product::paginate(15);
 
-        return Inertia::render('Store/AllProducts', [
-            'initialProducts' => $products->items(),
-            'canLoadMore' => $products->hasMorePages(),
-            'nextPage' => $products->currentPage() + 1,
-        ]);
-    }
 
     public function showProduct(string $slug)
     {
@@ -49,11 +43,94 @@ class StoreController extends Controller
         ]);
     }
 
+
+    // public function products(Request $request)
+    // {
+    //     $products = Product::paginate(15);
+
+    //     return Inertia::render('Store/AllProducts', [
+    //         'initialProducts' => $products->items(),
+    //         'canLoadMore' => $products->hasMorePages(),
+    //         'nextPage' => $products->currentPage() + 1,
+    //     ]);
+    // }
+
+    public function products($slug = null)
+    {
+        //        $slug = $request->get('slug');  // Get the category or subcategory slug from the request
+
+        // If a slug is provided, filter products by category or subcategory
+        if ($slug) {
+            // Try to find a category or subcategory with the provided slug
+            $category = Category::where('slug', $slug)->first();
+            $subcategory = SubCategory::where('slug', $slug)->first();
+            $brand = Brand::where('slug', $slug)->first();
+            if ($category) {
+                // If a category is found, filter products by category_id
+                $products = Product::where('category_id', $category->id)->paginate(15);
+            } elseif ($subcategory) {
+                // If a subcategory is found, filter products by subcategory_id
+                $products = Product::where('sub_category_id', $subcategory->id)->paginate(15);
+            } elseif ($brand) {
+                $products = Product::where('brand_id', $brand->id)->paginate(15);
+
+            } else {
+                // If no category or subcategory matches the slug, return an empty collection
+                $products = Product::paginate(15);  // fallback, you can choose to return empty here as well
+            }
+        } else {
+            // If no slug is provided, fetch all products
+            $products = Product::paginate(15);
+        }
+
+        return Inertia::render('Store/AllProducts', [
+            'initialProducts' => $products->items(),
+            'canLoadMore' => $products->hasMorePages(),
+            'nextPage' => $products->currentPage() + 1,
+        ]);
+    }
+
+    // public function loadMoreProducts(Request $request)
+    // {
+    //     $page = $request->get('page', 1);
+
+    //     $products = Product::paginate(15, ['*'], 'page', $page);
+
+    //     return response()->json([
+    //         'products' => $products->items(),
+    //         'canLoadMore' => $products->hasMorePages(),
+    //         'nextPage' => $page + 1,
+    //     ]);
+    // }
+
+
     public function loadMoreProducts(Request $request)
     {
         $page = $request->get('page', 1);
+        $slug = $request->get('slug');
 
-        $products = Product::paginate(15, ['*'], 'page', $page);
+
+        if ($slug) {
+            $category = Category::where('slug', $slug)->first();
+            $subcategory = SubCategory::where('slug', $slug)->first();
+            $brand = Brand::where('slug', $slug)->first();
+            if ($category) {
+
+                $products = Product::where('category_id', $category->id)->paginate(15, ['*'], 'page', $page);
+            } elseif ($subcategory) {
+
+                $products = Product::where('sub_category_id', $subcategory->id)->paginate(15, ['*'], 'page', $page);
+            } elseif ($brand) {
+                $products = Product::where('brand_id', $brand->id)->paginate(15);
+
+            } else {
+
+                $products = Product::paginate(15, ['*'], 'page', $page);
+            }
+        } else {
+
+            $products = Product::paginate(15, ['*'], 'page', $page);
+        }
 
         return response()->json([
             'products' => $products->items(),
@@ -71,4 +148,28 @@ class StoreController extends Controller
 
     }
 
+
+    public function hardwareMenu(Request $request)
+    {
+        $categories = Category::where('is_menu', 1)
+            ->with([
+                'subCategories' => function ($query) {
+                    $query->limit(6);
+                }
+            ])
+            ->get();
+
+        return response()->json($categories, 200);
+    }
+    public function checkout()
+    {
+
+
+        return Inertia::render('Store/Checkout', []);
+    }
+
+    public function cart()
+    {
+        return Inertia::render('Store/Cart', []);
+    }
 }

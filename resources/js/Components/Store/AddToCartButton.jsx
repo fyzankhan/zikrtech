@@ -11,7 +11,7 @@ const AddToCartButton = ({
 }) => {
   const handleAddToCart = () => {
     axios
-      .post("/store/add-to-cart", {
+      .post("add-to-cart", {
         product_id: productId,
         qty: quantity,
       })

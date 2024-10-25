@@ -15,7 +15,7 @@ const AboutUs = () => {
                     High-Quality Service
                   </div>
                   <h1 className="text-4xl font-bold text-gray-800 leading-tight">
-                    WHY CHOOSE ZIKR Tech?
+                    WHY CHOOSE US?
                   </h1>
                   <p className="text-gray-600 leading-relaxed">
                     We are committed to offering our clients the finest
@@ -41,7 +41,7 @@ const AboutUs = () => {
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
-                    <span>Group Specialized in ICT for 30 Years</span>
+                    <span>Group Specialized in ICT </span>
                   </li>
                   <li className="flex items-start space-x-2">
                     <svg

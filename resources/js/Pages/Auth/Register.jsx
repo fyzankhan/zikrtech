@@ -167,10 +167,6 @@ export default function Register() {
 
                       <div className="forgot-password-area mb-7">
                         <div className="remember-checkbox flex items-center space-x-2.5">
-                          <button
-                            type="button"
-                            className="w-5 h-5 text-qblack flex justify-center items-center border border-light-gray"
-                          />
                           <span className="text-base text-black">
                             I agree all
                             <span className="text-qblack">
@@ -183,7 +179,7 @@ export default function Register() {
                         <div className="flex justify-center">
                           <button
                             type="submit"
-                            className="black-btn text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-purple items-center"
+                            className=" text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-black items-center"
                           >
                             <span>Create Account</span>
                           </button>

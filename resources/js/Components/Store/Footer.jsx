@@ -9,14 +9,17 @@ const Footer = () => {
                 About Us
               </h1>
               <p className="text-[#9A9A9A] text-[15px] w-[247px] leading-[28px]">
-                We know there are a lot of threa developers our but we pride
-                into a firm in the industry.
+                We are a leading provider of high-quality IT products and
+                services in the USA with over years of experience in the
+                industry.
               </p>
             </div>
             <div className="flex-1 lg:flex">
               <div className="lg:w-1/3 w-full mb-10 lg:mb-0">
                 <div className="mb-5">
-                  <h6 className="text-[18] font-500 text-[#2F2F2F]">Feature</h6>
+                  <h6 className="text-[18] font-500 text-[#2F2F2F]">
+                    Useful Links
+                  </h6>
                 </div>
                 <div>
                   <ul className="flex flex-col space-y-4 ">
@@ -30,14 +33,21 @@ const Footer = () => {
                     <li>
                       <a href="/terms-condition">
                         <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                          Terms Condition
+                          Privacy Policy
                         </span>
                       </a>
                     </li>
                     <li>
                       <a href="/all-products">
                         <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                          Best Products
+                          Return Policy
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/all-products">
+                        <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                          Order Tracking
                         </span>
                       </a>
                     </li>
@@ -48,7 +58,7 @@ const Footer = () => {
                 <div>
                   <div className="mb-5">
                     <h6 className="text-[18] font-500 text-[#2F2F2F]">
-                      General Links
+                      Contact
                     </h6>
                   </div>
                   <div>
@@ -56,21 +66,21 @@ const Footer = () => {
                       <li>
                         <a href="/blogs">
                           <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            Blog
+                            866-585-5130
                           </span>
                         </a>
                       </li>
                       <li>
                         <a href="/tracking-order">
                           <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            Tracking Order
+                            sales@itdevicesonline.com
                           </span>
                         </a>
                       </li>
                       <li>
                         <a href="/become-saller">
                           <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            Become Seller
+                            2121 N California Blvd, Walnut Creek, CA 94596, USA
                           </span>
                         </a>
                       </li>
@@ -82,32 +92,16 @@ const Footer = () => {
                 <div>
                   <div className="mb-5">
                     <h6 className="text-[18] font-500 text-[#2F2F2F]">
-                      Helpful
+                      Authorized Partners
                     </h6>
                   </div>
                   <div>
                     <ul className="flex flex-col space-y-4 ">
+                      <li></li>
                       <li>
-                        <a href="/flash-sale">
-                          <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            Flash Sale
-                          </span>
-                        </a>
+                        <img src="https://itdevicesonline.com/images/footer/ISO-logo.webp" />
                       </li>
-                      <li>
-                        <a href="/faq">
-                          <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            FAQ
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/about">
-                          <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            Support
-                          </span>
-                        </a>
-                      </li>
+                      <li></li>
                     </ul>
                   </div>
                 </div>
