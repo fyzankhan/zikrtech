@@ -1,4 +1,4 @@
-const ProductImages = () => {
+const ProductImages = ({ mainImage }) => {
   return (
     <>
       <div
@@ -7,11 +7,8 @@ const ProductImages = () => {
       >
         <div className="w-full">
           <div className="w-full h-[600px] border border-qgray-border flex justify-center items-center overflow-hidden relative mb-3">
-            <img
-              src="/assets/images/product-details-1.png"
-              alt=""
-              className="object-contain"
-            />
+            <img src={`/${mainImage}`} alt="" className="object-contain" />
+
             {/* <div className="w-[80px] h-[80px] rounded-full bg-qyellow text-qblack flex justify-center items-center text-xl font-medium absolute left-[30px] top-[30px]">
               <span>-50%</span>
             </div> */}

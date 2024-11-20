@@ -67,13 +67,14 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
+
         $data = $request->validated();
-        $data['thumb_image'] = $this->uploadImage($request, 'image', 'uploads/products');
+        $data['thumb_image'] = $this->uploadImage($request, 'thumb_image', 'uploads/products');
         $data['slug'] = Str::slug($data['name']);
 
         $this->productRepository->create($data);
 
-        return redirect()->route('admin.product.index')->with('success', 'Product created successfully!');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
     /**
@@ -82,11 +83,9 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = $this->productRepository->findById($id);
-        $subCategories = $this->productRepository->getSubCategories($product->category_id);
-        $categories = $this->productRepository->getCategories();
-        $brands = $this->productRepository->getBrands();
 
-        return Inertia::render('Backend/Product/Edit', compact('product', 'categories', 'brands', 'subCategories'));
+
+        return Inertia::render('Backend/Product/Edit', compact('product'));
     }
 
     /**
@@ -97,15 +96,18 @@ class ProductController extends Controller
         $data = $request->validated();
         $product = $this->productRepository->findById($id);
 
-        if ($request->hasFile('image')) {
-            $data['thumb_image'] = $this->updateImage($request, 'image', 'uploads/products', $product->thumb_image);
+        if ($request->hasFile('thumb_image')) {
+            $data['thumb_image'] = $this->updateImage($request, 'thumb_image', 'uploads/products', $product->thumb_image);
+        } else {
+
+            unset($data['thumb_image']);
         }
 
         $data['slug'] = Str::slug($data['name']);
 
         $this->productRepository->update($data, $id);
 
-        return redirect()->route('admin.product.index')->with('success', 'Product updated successfully!');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
 
     /**

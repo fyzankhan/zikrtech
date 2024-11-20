@@ -9,10 +9,12 @@ import Product from "@/Components/Store/Product";
 import ProductsFilter from "@/Components/Store/ProductsFilter";
 
 const AllProducts = ({
+  auth,
   initialProducts = [],
   canLoadMore: initialCanLoadMore,
   nextPage: initialNextPage,
   slug = null, // Add the slug prop to filter by category or subcategory
+  pageType = null,
 }) => {
   const [products, setProducts] = useState(initialProducts);
   const [canLoadMore, setCanLoadMore] = useState(initialCanLoadMore);
@@ -66,7 +68,7 @@ const AllProducts = ({
 
   return (
     <>
-      <StoreLayout>
+      <StoreLayout auth={auth}>
         <Head title="All Products" />
         <div className="w-full pt-[30px] pb-[60px]">
           <div className="products-page-wrapper w-full">
@@ -83,13 +85,13 @@ const AllProducts = ({
                 </span>
               </div>
               <div className="w-full lg:flex lg:space-x-[30px]">
-                <ProductsFilter slug={slug} />{" "}
-                {/* Pass the slug to filter component */}
+                <ProductsFilter slug={slug} pageType={pageType} />
+
                 <div className="flex-1">
                   <div className="products-sorting w-full bg-white md:h-[70px] flex md:flex-row flex-col md:space-y-0 space-y-5 md:justify-between md:items-center p-[30px] mb-[40px]">
                     <div>
                       <p className="font-400 text-[13px]">
-                        <span className="text-qgray"> Showing</span>{" "}
+                        <span className="text-qgray"> Showing</span>
                         {products.length} products
                       </p>
                     </div>

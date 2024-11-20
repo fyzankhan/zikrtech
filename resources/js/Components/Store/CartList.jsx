@@ -23,8 +23,16 @@ const CartList = ({ cartItems }) => {
                     <div className="flex space-x-6 items-center">
                       <div className="w-[80px] h-[80px] overflow-hidden flex justify-center items-center border border-[#EDEDED]">
                         <img
-                          src={item.image} // Assuming `image` is a property in each item
+                          src={
+                            item.image
+                              ? item.image
+                              : "/uploads/products/default.jpg"
+                          }
                           alt={item.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/uploads/products/default.jpg";
+                          }}
                           className="w-full h-full object-contain"
                         />
                       </div>

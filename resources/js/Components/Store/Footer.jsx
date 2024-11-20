@@ -66,14 +66,14 @@ const Footer = () => {
                       <li>
                         <a href="/blogs">
                           <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            866-585-5130
+                            000-000-0000
                           </span>
                         </a>
                       </li>
                       <li>
                         <a href="/tracking-order">
                           <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                            sales@itdevicesonline.com
+                            sales@centraldistributor.com
                           </span>
                         </a>
                       </li>

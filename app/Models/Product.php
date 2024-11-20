@@ -9,10 +9,29 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function vendor()
-    {
-        return $this->belongsTo(Vendor::class);
-    }
+
+    protected $fillable = [
+        'name',
+        'part_no',
+        'slug',
+        'thumb_image',
+        'category_id',
+        'sub_category_id',
+        'brand_id',
+        'qty',
+        'short_description',
+        'long_description',
+        'sku',
+        'price',
+        'offer_price',
+        'offer_start_date',
+        'offer_end_date',
+        'status',
+        'is_approved',
+        'seo_title',
+        'seo_description',
+    ];
+
 
     public function category()
     {
@@ -24,10 +43,6 @@ class Product extends Model
         return $this->hasMany(ProductImageGallery::class);
     }
 
-    public function variants()
-    {
-        return $this->hasMany(ProductVariant::class);
-    }
 
     public function brand()
     {

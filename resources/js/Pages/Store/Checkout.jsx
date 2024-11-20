@@ -2,7 +2,7 @@ import CheckoutAddress from "@/Components/Store/CheckoutAddress";
 import StoreLayout from "@/Layouts/StoreLayout";
 import { useRef } from "react";
 
-const Checkout = () => {
+const Checkout = ({ auth }) => {
   const checkoutAddressRef = useRef(null);
 
   const handleFormSubmit = (formData) => {
@@ -16,7 +16,7 @@ const Checkout = () => {
   };
   return (
     <>
-      <StoreLayout>
+      <StoreLayout auth={auth}>
         <div className="w-full  pt-0 pb-0">
           <div className="checkout-page-wrapper w-full bg-white pb-[60px]">
             <div className="w-full mb-5">

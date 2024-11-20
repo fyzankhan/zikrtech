@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\ApiController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +19,7 @@ Route::get('/all-products', [StoreController::class, 'products'])->name('product
 Route::get('/load-more-products', [StoreController::class, 'loadMoreProducts'])->name('products.loadMore');
 
 Route::get('/category/{slug}', [StoreController::class, 'products'])->name('products.category');
+Route::get('/brand/{slug}', [StoreController::class, 'products'])->name('products.brand');
 
 
 /** Cart routes */
@@ -51,17 +53,19 @@ Route::get('apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-
 Route::get('coupon-calculation', [CartController::class, 'couponCalculation'])->name('coupon-calculation');
 
 
-Route::get('/store/product/{slug}', [StoreController::class, 'showProduct'])->name('product.show');
+Route::get('/product/{slug}', [StoreController::class, 'showProduct'])->name('product.show');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::resource('user', UserController::class);
+    //Route::resource('user', UserController::class);
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware(['auth', 'role:user'])->group(function () {
+    Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/user/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/user/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete(uri: '/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
@@ -72,5 +76,15 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/api/brands', [ApiController::class, 'brands'])
     ->name('api-brands');
+
+Route::get('/api/categories', [ApiController::class, 'categories'])
+    ->name('api-categories');
+
+
+// Route to get all brands associated with a specific category
+Route::get('/category/brands/{slug}', [ApiController::class, 'categorybrands']);
+
+// Route to get all categories associated with a specific brand
+Route::get('/brand/categories/{slug}', [ApiController::class, 'brandcategories']);
 
 require __DIR__ . '/auth.php';

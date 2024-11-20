@@ -32,15 +32,13 @@ const Brands = () => {
     <>
       <div className="w-full brand-section-wrapper mb-[60px] aos-init">
         <div className="container-x mx-auto">
-          <div className="section-title flex justify-between items-center mb-5">
-            <h1 className="sm:text-3xl text-xl font-600 text-qblacktext">
-              We Make IT Procurement Easier
-            </h1>
-          </div>
-          <div className="grid lg:grid-cols-6 sm:grid-cols-4 grid-cols-2 gap-4">
+          <div className="grid lg:grid-cols-4 sm:grid-cols-4 grid-cols-2 gap-4 p-5">
             {brands.map((brand) => (
-              <div key={brand.id} className="item">
-                <div className="w-full h-[130px] bg-white border border-primarygray flex justify-center items-center">
+              <div
+                key={brand.id}
+                className="item hover:shadow-lg hover:shadow-gray-300 transition-shadow duration-300 cursor-pointer"
+              >
+                <div className="w-full h-[70px]    flex justify-center items-center">
                   <img src={brand.logo} alt={brand.name} />
                 </div>
               </div>

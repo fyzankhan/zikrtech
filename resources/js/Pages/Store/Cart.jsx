@@ -1,10 +1,10 @@
 import CartList from "@/Components/Store/CartList";
 import StoreLayout from "@/Layouts/StoreLayout";
 
-const Cart = ({ cartItems }) => {
+const Cart = ({ auth, cartItems }) => {
   return (
     <>
-      <StoreLayout>
+      <StoreLayout auth={auth}>
         <div className="w-full  pt-0 pb-0">
           <div className="cart-page-wrapper w-full bg-white pb-[60px]">
             <div className="w-full">

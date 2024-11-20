@@ -45,6 +45,8 @@ class UserController extends Controller
         return inertia("User/Create");
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */

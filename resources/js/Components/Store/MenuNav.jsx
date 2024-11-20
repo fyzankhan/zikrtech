@@ -13,7 +13,7 @@ const MenuNav = () => {
                 <NavBrandCategories></NavBrandCategories>
                 <div className="nav">
                   <ul className="nav-wrapper flex xl:space-x-10 space-x-5">
-                    <li className="relative">
+                    {/* <li className="relative">
                       <span className="flex items-center text-sm font-600 cursor-pointer text-qblacktext">
                         <span>Products</span>
                         <span className="ml-1.5 ">
@@ -73,7 +73,7 @@ const MenuNav = () => {
                           </div>
                         </div>
                       </div>
-                    </li>
+                    </li> */}
                     <HardwareMenuList></HardwareMenuList>
                     <li>
                       <a href="/about">

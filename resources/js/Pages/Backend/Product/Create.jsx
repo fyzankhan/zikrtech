@@ -7,7 +7,7 @@ import axios from "axios";
 function CreateProduct() {
   const { data, setData, post, errors } = useForm({
     name: "",
-    slug: "",
+    part_no: "",
     thumb_image: null,
     category_id: null,
     sub_category_id: null,
@@ -45,6 +45,10 @@ function CreateProduct() {
     });
   }
 
+  function handleFileChange(e) {
+    setData("thumb_image", e.target.files[0]);
+  }
+
   return (
     <AdminLayout>
       <div className="bg-white p-6 rounded-lg shadow-md">
@@ -52,7 +56,95 @@ function CreateProduct() {
           Create Product
         </h1>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          {/* Other input fields */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              value={data.name}
+              onChange={(e) => setData("name", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.name && (
+              <div className="text-red-500 text-sm mt-2">{errors.name}</div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Mfr. Part#
+            </label>
+            <input
+              type="text"
+              value={data.part_no}
+              onChange={(e) => setData("part_no", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.part_no && (
+              <div className="text-red-500 text-sm mt-2">{errors.part_no}</div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Product Image
+            </label>
+            <input type="file" onChange={handleFileChange} className="mt-1" />
+            {errors.thumb_image && (
+              <div className="text-red-500 text-sm mt-2">
+                {errors.thumb_image}
+              </div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Quantity
+            </label>
+            <input
+              type="number"
+              value={data.qty}
+              onChange={(e) => setData("qty", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.qty && (
+              <div className="text-red-500 text-sm mt-2">{errors.qty}</div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Price
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              value={data.price}
+              onChange={(e) => setData("price", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.price && (
+              <div className="text-red-500 text-sm mt-2">{errors.price}</div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Short Description
+            </label>
+            <textarea
+              value={data.short_description}
+              onChange={(e) => setData("short_description", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.short_description && (
+              <div className="text-red-500 text-sm mt-2">
+                {errors.short_description}
+              </div>
+            )}
+          </div>
+
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
               Category
@@ -80,7 +172,7 @@ function CreateProduct() {
             <AsyncSelect
               cacheOptions
               loadOptions={(inputValue) =>
-                loadOptions(inputValue, "/api/subcategories/search")
+                loadOptions(inputValue, "/admin/subcategory/search")
               }
               onChange={(selectedOption) =>
                 setData("sub_category_id", selectedOption.value)
@@ -111,7 +203,39 @@ function CreateProduct() {
             )}
           </div>
 
-          {/* Other input fields */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              SEO Title
+            </label>
+            <input
+              type="text"
+              value={data.seo_title}
+              onChange={(e) => setData("seo_title", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.seo_title && (
+              <div className="text-red-500 text-sm mt-2">
+                {errors.seo_title}
+              </div>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              SEO Description
+            </label>
+            <textarea
+              value={data.seo_description}
+              onChange={(e) => setData("seo_description", e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded w-full"
+            />
+            {errors.seo_description && (
+              <div className="text-red-500 text-sm mt-2">
+                {errors.seo_description}
+              </div>
+            )}
+          </div>
+
           <div className="mt-6">
             <button
               type="submit"

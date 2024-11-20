@@ -15,4 +15,10 @@ class Brand extends Model
         'status',
         'is_featured'
     ];
+
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

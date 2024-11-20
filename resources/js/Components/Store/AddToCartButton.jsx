@@ -1,6 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { useCart } from "@/contexts/CartContext";
 
 const AddToCartButton = ({
   productId,
@@ -9,18 +9,15 @@ const AddToCartButton = ({
   style = {},
   children,
 }) => {
-  const handleAddToCart = () => {
-    axios
-      .post("add-to-cart", {
-        product_id: productId,
-        qty: quantity,
-      })
-      .then((response) => {
-        toast.success("Product added to cart successfully!");
-      })
-      .catch((error) => {
-        toast.error("Failed to add product to cart. Please try again.");
-      });
+  const { addToCart } = useCart();
+
+  const handleAddToCart = async () => {
+    try {
+      await addToCart(productId, quantity);
+      toast.success("Product added to cart successfully!");
+    } catch (error) {
+      toast.error("Failed to add product to cart. Please try again.");
+    }
   };
 
   return (

@@ -6790,3 +6790,9 @@ input:checked + .slider-btn:before {
 footer {
     background-color: #f8f8f8;
 }
+
+.banner-plain {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

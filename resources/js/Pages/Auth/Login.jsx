@@ -4,7 +4,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import StoreLayout from "@/Layouts/StoreLayout";
 import LoginImage from "@/Components/Icon/LoginImage";
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ auth, status, canResetPassword }) {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: "",
     password: "",
@@ -28,7 +28,7 @@ export default function Login({ status, canResetPassword }) {
   };
 
   return (
-    <StoreLayout>
+    <StoreLayout auth={auth}>
       <Head title="Log in" />
 
       {status && <div className="mb-4 font-medium text-sm ">{status}</div>}
@@ -129,7 +129,7 @@ export default function Login({ status, canResetPassword }) {
                       <div className="flex justify-center">
                         <button
                           type="submit"
-                          className="mb-6 text-sm text-black border-black w-full h-[50px] font-semibold flex justify-center items-center"
+                          className=" text-sm text-white w-full h-[50px] font-semibold flex justify-center bg-black items-center"
                           disabled={processing}
                         >
                           <span>Log In</span>

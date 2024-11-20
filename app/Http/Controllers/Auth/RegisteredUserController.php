@@ -47,7 +47,13 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
 
-        return redirect()->back()->with('success', 'Registered Successfully!');
+        // return redirect()->back()->with('success', 'Registered Successfully!');
+        $intendedUrl = redirect()->intended()->getTargetUrl();
 
+
+        if ($intendedUrl == route('register')) {
+            return redirect()->route('dashboard');
+        }
+        return redirect()->intended($intendedUrl);
     }
 }
